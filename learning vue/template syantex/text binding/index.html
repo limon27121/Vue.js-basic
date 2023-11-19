@@ -1,0 +1,37 @@
+<!--
+Say Hello World with Vue!
+-->
+
+<script type="module">
+    import { createApp, ref } from 'vue'
+    
+    createApp({
+      setup() {
+        // A "ref" is a reactive data source that stores a value.
+        // Technically, we don't need to wrap the string with ref()
+        // in order to display it, but we will see in the next
+        // example why it is needed if we ever intend to change
+        // the value.
+        const message = ref('Hello World!')
+        const color=ref("red")
+    
+        return {
+          message,
+          color
+        }
+      }
+    }).mount('#app')
+    </script>
+    
+    <div id="app">
+      
+        //text binding
+
+      <h1 :class="{'red':true}">{{ message}}</h1>
+
+      //att binding and color change    (style binding)
+
+      <p :style="{color:color}">
+        {{color}}
+      </p>
+    </div>
