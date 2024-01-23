@@ -1,9 +1,13 @@
 <script setup>
 import { ref } from 'vue'
+const filteredUsers=null
 let user=ref([])
 let filter_user=ref([])
 let phone=ref("")
 let click_details=ref(false)
+let Not_found=ref(false)
+
+//api call for all phones
 async function fetchUsers() {
   try {
     let response = await fetch('https://openapi.programming-hero.com/api/phones?search=iphone');
@@ -15,18 +19,29 @@ async function fetchUsers() {
 }
 fetchUsers()
 
+//filter specific phone
 const filterUsers = () => {
   if (phone.value) {
     return user.value.filter((u1) => u1.phone_name.toLowerCase().replace(/\s/g, '').includes(phone.value.toLowerCase()));
   }
+
+//   else if(phone.value){
+//      filteredUsers = user.value.filter((u1) =>
+//     !u1.phone_name.toLowerCase().replace(/\s/g, '').includes(phone.value.toLowerCase()))
+//     console.log(typeof(filteredUsers));
+
+//   }
    else {
     return user.value;
   }
 };
+
+//clear the input-field value
 function clear(){
     phone.value=""
 }
 
+//details phone which selected
 async function find(id) {
   const url = `https://openapi.programming-hero.com/api/phone/${id}`;
 
@@ -47,6 +62,8 @@ async function find(id) {
 
 }
 
+//back to home page
+
 function back(){
     click_details.value=false
 }
@@ -56,7 +73,8 @@ function back(){
 </script>
 
 <template>
-    <div v-if="!click_details">
+   <p v-if="Not_found">Not found</p>
+    <div  v-if="!click_details">
     <h1>Apple Store</h1>
     <input type="text" placeholder="Phone_name" v-model="phone">
     <button @click="clear()" class="b1">clear</button>
@@ -85,7 +103,7 @@ function back(){
      <li>{{filter_user.mainFeatures.displaySize }}</li>
      <li>{{ filter_user.mainFeatures.memory }}</li>
      <li>{{ filter_user.mainFeatures.storage }}</li>
-     <li>{{ filter_user.releaseDate }}</li>
+     <li v-if="filter_user.releaseDate">{{ filter_user.releaseDate }}</li>
     </div>
      </ul>
   </div>
