@@ -1,5 +1,6 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
+import Chart from './components/Chart.vue';
 import { ref,onMounted,onBeforeMount,onBeforeUpdate,onUpdated } from 'vue'
 const count=ref(0);
 const source=ref(true);
@@ -26,6 +27,7 @@ onUpdated(()=>{
   <button type="button" @click="count++">count is {{ count }}</button><br>
   <button @click="source=!source">toggle</button>
   <HelloWorld v-if="source"/>
+  <Chart/>
 </template>
 
 <style scoped>
